@@ -299,7 +299,10 @@ const computerStrategy = () => {
           move = true;
          }
       }
-    } else if ((board[2][0] === "X" && board[1][1] ==="X") || (board[1][1] === "X" && board[0][2] ==="X") || (board[2][0] === "X" && board[0][2] ==="X")) {
+    }
+  }
+  if (move === false) {
+     if ((board[2][0] === "X" && board[1][1] ==="X") || (board[1][1] === "X" && board[0][2] ==="X") || (board[2][0] === "X" && board[0][2] ==="X")) {
           let y = 2;
           for (let i = 0; i < 3; i++) {
             if (board[y][i] === "") {
@@ -309,5 +312,5 @@ const computerStrategy = () => {
           y = y - 1;
         }
        }
-      }
-    }
+      } 
+}
