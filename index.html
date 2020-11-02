@@ -13,26 +13,42 @@
     <div class="container">
       <div class="jumbotron">
         <h1>Welcome to Tic Tac Toe</h1>
-        <p>Get ready to play!</p>
-        <button onclick="resetBoard()" type="button" class="btn btn-primary btn-lg" name="button">Restart</button>
+        <p>Get ready to play! Click any square to start. Winner starts each round.</p>
+        <button onclick="resetBoard()" type="button" class="btn btn-primary btn-lg" name="button">Clear Board</button>
       </div>
-      <table>
-        <tr>
-          <td id='0-0' onclick="handleClick(this)" ></td>
-          <td id='0-1' onclick="handleClick(this)"></td>
-          <td id='0-2' onclick="handleClick(this)"></td>
-        </tr>
-        <tr>
-          <td id='1-0' onclick="handleClick(this)" ></td>
-          <td id='1-1' onclick="handleClick(this)"></td>
-          <td id='1-2' onclick="handleClick(this)"></td>
-        </tr>
-        <tr>
-          <td id='2-0' onclick="handleClick(this)" ></td>
-          <td id='2-1' onclick="handleClick(this)"></td>
-          <td id='2-2' onclick="handleClick(this)"></td>
-        </tr>
-      </table>
+
+      <div class="game-arena">
+        <div class="jumbotron">
+          <div class="xScoreBox">
+            <h2>Player<br>Wins:</h2>
+            <h1 id="xScore">0</h1>
+          </div>
+        </div>
+        <table>
+          <tr>
+            <td id='0-0' onclick="handleClick(this)" ></td>
+            <td id='0-1' onclick="handleClick(this)"></td>
+            <td id='0-2' onclick="handleClick(this)"></td>
+          </tr>
+          <tr>
+            <td id='1-0' onclick="handleClick(this)" ></td>
+            <td id='1-1' onclick="handleClick(this)"></td>
+            <td id='1-2' onclick="handleClick(this)"></td>
+          </tr>
+          <tr>
+            <td id='2-0' onclick="handleClick(this)" ></td>
+            <td id='2-1' onclick="handleClick(this)"></td>
+            <td id='2-2' onclick="handleClick(this)"></td>
+          </tr>
+        </table>
+        <div class="jumbotron">
+          <div class="oScoreBox">
+            <h2>Computer<br>Wins:</h2>
+            <h1 id="oScore">0</h1>
+          </div>
+        </div>
+      </div>
+
       <div class="jumbotron">
         <h1 id='winner'></h1>
       </div>

@@ -8,6 +8,22 @@ body {
   justify-content: center;
   height: 200px;
 }
+.game-arena {
+  display: flex;
+  align-items: center;
+  margin: 10px auto;
+}
+.xScoreBox, .oScoreBox{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100px;
+}
+.winner {
+  background: darkseagreen;
+}
 table {
   margin: 0 auto 30px;
 }
@@ -15,6 +31,18 @@ td{
   height:150px;
   width:150px;
   text-align: center;
-  border: 5px solid black;
-  font-size: 100px;
+  /* border: 5px solid black; */
+  font-size: 95px;
+}
+
+tr td:nth-child(1) {
+  border-right: 4px solid black;
+}
+tr td:nth-child(3) {
+  border-left: 4px solid black;
+}
+
+tr:nth-child(2) td:nth-child(2), tr:nth-child(even) td:nth-child(odd){
+  border-top: 4px solid black;
+  border-bottom: 4px solid black;
 }

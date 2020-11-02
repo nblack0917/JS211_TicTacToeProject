@@ -2,6 +2,9 @@ let currentMarker = 'X'
 let board = [["","",""], ["","",""], ["","",""]]
 let gameOver = false;
 let move = false;
+let computerStart = false;
+let xScore = 0;
+let oScore = 0;
 
 // this function places an X marker when the user clicks on a space
 const handleClick = (element) => {
@@ -21,8 +24,6 @@ const handleClick = (element) => {
 const computerMove = () => {
   if (gameOver === false) {
     computerStrategy();
-    // computerStrategyRow();
-    // computerStrategyCol();
     while (move === false) {
       let row = Math.floor(Math.random()*3);
       let col = Math.floor(Math.random()*3);
@@ -61,7 +62,7 @@ const changeMarker = () => {
 
 // This "resetBoard" function is called when the user clicks on the "Restart" button.
 const resetBoard = () => {
-    const squares = document.getElementsByTagName("TD");
+  const squares = document.getElementsByTagName("TD");
   // loops over the HTML Collection of TDs and clears out the Xs and Os
   for (i=0; i < squares.length; i++) {
     // will log out the id of each square as it loops over them.
@@ -72,7 +73,15 @@ const resetBoard = () => {
     board = [["","",""], ["","",""], ["","",""]];
     gameOver = false;
   }
+  if (computerStart === true) {
+    currentMarker = "O";
+    move = false;
+    setTimeout(function() {
+      computerMove();
+    }, 500)
+  } else {
   currentMarker = "X"
+  }
 }
 
 //determine if there is a tie
@@ -98,8 +107,23 @@ const checkForTie = () => {
 //determine if there is a winner
 const checkForWin = () => {
   let winner = document.getElementById('winner');
+  let xScoreBox = document.getElementById("xScore");
+  let oScoreBox = document.getElementById("oScore");
   if(horizontalWin() || verticalWin() || diagonalWin()) {
     window.alert(`Player ${currentMarker} won!`);
+    if (currentMarker === "X") {
+      xScore++
+      xScoreBox.parentNode.parentNode.classList.add("winner")
+      oScoreBox.parentNode.parentNode.classList.remove("winner")
+      computerStart = false
+    } else {
+      oScore++
+      oScoreBox.parentNode.parentNode.classList.add("winner")
+      xScoreBox.parentNode.parentNode.classList.remove("winner")
+      computerStart = true
+    }
+    xScoreBox.innerHTML = xScore;
+    oScoreBox.innerHTML = oScore;
     gameOver = true;
   } else {
     changeMarker()
@@ -160,10 +184,10 @@ const verticalWin = () => {
 
 const diagonalWin = () => {
   if (board[0][0] == currentMarker && board[1][1] == currentMarker && board[2][2] == currentMarker){
-    winner.innerHTML = currentMarker + " wins in right diagnal"
+    winner.innerHTML = currentMarker + " wins in right diagonal"
     return true
   } else if (board[0][2] == currentMarker && board[1][1] == currentMarker && board[2][0] == currentMarker){
-    winner.innerHTML = currentMarker + " wins in left diagnal"
+    winner.innerHTML = currentMarker + " wins in left diagonal"
     return true
   }
 }
@@ -237,27 +261,30 @@ const computerStrategy = () => {
       }
     }
   }  
-  //Winning move for diagnals
+  //Winning move for diagonals
     if (move === false) {
     if ((board[0][0] === "O" && board[1][1] ==="O") || (board[1][1] === "O" && board[2][2] ==="O") || (board[0][0] === "O" && board[2][2] ==="O")) {
       for (let i = 0; i < 3; i++) {
         if (board[i][i] === "") {
           addMarker(i + "-" + i);
           move = true;
+          }
+        }
+     }
+    } 
+    if (move === false) {
+      if ((board[2][0] === "O" && board[1][1] ==="O") || (board[1][1] === "O" && board[0][2] ==="O") || (board[2][0] === "O" && board[0][2] ==="O")) {
+           let y = 2;
+           for (let i = 0; i < 3; i++) {
+             if (board[y][i] === "") {
+             addMarker(y + "-" + i);
+             move = true;
+           }
+           y = y - 1;
          }
       }
-    } else if ((board[2][0] === "O" && board[1][1] ==="O") || (board[1][1] === "O" && board[0][2] ==="O") || (board[2][0] === "O" && board[0][2] ==="O")) {
-          let y = 2;
-          for (let i = 0; i < 3; i++) {
-            if (board[y][i] === "") {
-            addMarker(y + "-" + i);
-            move = true;
-              console.log("gotcha")
-          }
-          y = y - 1;
-        }
-       }
-      }
+    }
+       
   //Blocking move for Columns
   if (move === false) {
     let colOfX = 0;
@@ -290,7 +317,7 @@ const computerStrategy = () => {
       }
     }
   }  
-  //Blocking move for diagnals
+  //Blocking move for diagonals
   if (move === false) {
     if ((board[0][0] === "X" && board[1][1] ==="X") || (board[1][1] === "X" && board[2][2] ==="X") || (board[0][0] === "X" && board[2][2] ==="X")) {
       for (let i = 0; i < 3; i++) {
@@ -302,7 +329,7 @@ const computerStrategy = () => {
     }
   }
   if (move === false) {
-     if ((board[2][0] === "X" && board[1][1] ==="X") || (board[1][1] === "X" && board[0][2] ==="X") || (board[2][0] === "X" && board[0][2] ==="X")) {
+    if ((board[2][0] === "X" && board[1][1] ==="X") || (board[1][1] === "X" && board[0][2] ==="X") || (board[2][0] === "X" && board[0][2] ==="X")) {
           let y = 2;
           for (let i = 0; i < 3; i++) {
             if (board[y][i] === "") {
@@ -311,6 +338,7 @@ const computerStrategy = () => {
           }
           y = y - 1;
         }
-       }
-      } 
+    }
+  } 
 }
+
